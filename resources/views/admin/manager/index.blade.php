@@ -35,17 +35,17 @@
 						</tr>
 					</thead>
 					<tbody>
-
+							@foreach($managers as $manager)
 							<tr class="text-c">
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>{{$manager['id']}}</td>
+								<td>{{$manager['username']}}</td>
+								<td>{{$manager['roleid']}}</td>
 								<td class="td-manage">
 									<a title="编辑" href="javascript:;" onclick="" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 									<a title="删除" href="javascript:;" onclick="" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 								</td>
 							</tr>
-
+							@endforeach
 					</tbody>
 				</table>
 			</div>

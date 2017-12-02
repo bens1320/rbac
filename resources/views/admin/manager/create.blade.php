@@ -5,13 +5,16 @@
 
 @section('content')
 <article class="cl pd-20">
-	<form action="" method="post" class="form form-horizontal" id="form-member-edit">
+	<form action="" method="post" class="form form-horizontal" id="form-manager-create">
 	  {{ csrf_field() }}
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<select class="select" name="roleid" size="1">
-					<option value="">请选择</option>
+					<!-- <option value="">请选择</option> -->
+					@foreach ($roles as $role)
+					<option value="{{$role['id']}}">{{$role['rolename']}}</option>
+					@endforeach
 				</select>
 			</div>
 			<div class="col-4"> </div>
@@ -19,14 +22,21 @@
 	  <div class="row cl">
 	    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>名称：</label>
 	    <div class="formControls col-xs-8 col-sm-9">
-	      <input type="text" class="input-text" value="" placeholder="" name="username" >
+	      <input type="text" class="input-text" value="" placeholder="" id="username"  name="username" >
 	    </div>
 	    <div class="col-4"> </div>
 	  </div>
 	  <div class="row cl">
 	    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
 	    <div class="formControls col-xs-8 col-sm-9">
-	      <input type="texts" class="input-text" value="" placeholder="" name="password"  >
+	      <input type="text" class="input-text" value="" placeholder="" id="password" name="password"  >
+	    </div>
+	    <div class="col-4"> </div>
+	  </div>
+		<div class="row cl">
+	    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
+	    <div class="formControls col-xs-8 col-sm-9">
+	      <input type="text" class="input-text" value="" placeholder="" id="repassword" name="repassword"  >
 	    </div>
 	    <div class="col-4"> </div>
 	  </div>
@@ -41,11 +51,10 @@
 @endsection
 
 @section('my-js')
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/admin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
-  var ue = UE.getEditor('editor');
 
 $(function(){
 	$('.skin-minimal input').iCheck({
@@ -54,35 +63,38 @@ $(function(){
 		increaseArea: '20%'
 	});
 
-	$("#form-member-edit").validate({
+	$("#form-manager-create").validate({
 		rules:{
-			nickname:{
+			username:{
 				required:true,
-				minlength:4,
+				minlength:6,
 				maxlength:32
 			},
-			phone:{
+			password:{
 				required:true,
-				isMobile:true,
+				minlength:6,
+				maxlength:32
 			},
-			email:{
+			repassword:{
 				required:true,
-				email:true,
-			},
+				minlength:6,
+				maxlength:32,
+				equalTo:"#password"
+			}
 		},
 		onkeyup:false,
 		focusCleanup:true,
 		success:"valid",
 		submitHandler:function(form){
-		  $('#form-member-edit').ajaxSubmit({
+		  $('#form-manager-create').ajaxSubmit({
           type: 'post', // 提交方式 get/post
-          url: '/admin/service/member/edit', // 需要提交的 url
+          url: '/admin/manager', // 需要提交的 url
           dataType: 'json',
           data: {
-            id: "",
-            nickname: $('input[name=nickname]').val(),
-            phone: $('input[name=phone]').val(),
-            email: $('input[name=email]').val(),
+            username: $('input[name=username]').val(),
+            password: $('input[name=password]').val(),
+            repassword: $('input[name=repassword]').val(),
+            roleid: $('input[name=roleid]').val(),
             _token: "{{csrf_token()}}"
           },
           success: function(data) {

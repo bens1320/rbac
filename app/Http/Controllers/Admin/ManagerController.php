@@ -6,6 +6,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Handlers\M3Result;
+use App\Models\Role;
+use App\Models\Manager;
+
 
 class ManagerController extends Controller
 {
@@ -14,9 +17,10 @@ class ManagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Manager $manager)
     {
-        return view('admin.manager.index');
+        $managers = $manager->get();
+        return view('admin.manager.index', compact('managers'));
     }
 
     /**
@@ -24,10 +28,10 @@ class ManagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Role $role)
     {
-        
-        return view('admin.manager.create');
+        $roles = $role->get();
+        return view('admin.manager.create', compact('roles'));
     }
 
     /**
@@ -36,9 +40,24 @@ class ManagerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Manager $manager, M3Result $m3_result)
     {
-        //
+      $username = $request->input('username', '');
+      $password = $request->input('password', '');
+      $roleid = $request->input('roleid', '');
+
+      // 可以先做后台数据验证
+
+      $manager->username = $username;
+      $manager->password = $password;
+      $manager->roleid = $roleid;
+      $manager->save();
+
+      $m3_result->status = 0;
+      $m3_result->message = '添加成功';
+
+      return $m3_result->toJson();
+
     }
 
     /**
