@@ -21,33 +21,31 @@
 				<table class="table table-border table-bordered table-hover table-bg table-sort">
 					<thead>
 						<tr class="text-c">
-							<th width="25"><input type="checkbox" name="" value=""></th>
 							<th width="25">ID</th>
 							<th width="100">权限名称</th>
+							<th width="100">父类</th>
 							<th width="50">模块名称</th>
 							<th width="50">控制器名称</th>
 							<th width="50">操作方法名称</th>
-							<th width="100">父类</th>
 							<th width="100">操作</th>
 						</tr>
 					</thead>
 					<tbody>
+						@foreach($permissions as $permission)
 						<tr class="text-c">
-						<td><input type="checkbox" value="1" name=""></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>
-						</td>
-						<td></td>
-						<td>
-							<img src="" alt="" style="width: 50px; height: 50px;">
-						</td>
-							<td class="td-manage">
+						<td>{{$permission['id']}}</td>
+						<td>{{$permission['pername']}}</td>
+						<td>{{$permission['pid']}}</td>
+						<td>{{$permission['mname']}}</td>
+						<td>{{$permission['cname']}}</td>
+						<td>{{$permission['aname']}}</td>
+						<td class="td-manage">
 								<a title="编辑" href="javascript:;" onclick="" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-						<a title="删除" href="javascript:;" onclick='' class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+								<a title="删除" href="javascript:;" onclick='' class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 						</td>
 					</tr>
+					@endforeach
+
 					</tbody>
 				</table>
 			</div>

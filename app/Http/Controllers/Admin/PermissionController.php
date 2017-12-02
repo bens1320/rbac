@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Handlers\M3Result;
+use App\Models\Permission;
+
 class PermissionController extends Controller
 {
     /**
@@ -11,9 +14,11 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Permission $permission)
     {
-        return view('admin.permission.index');
+        $permissions = $permission->get();
+        $permissions = $this->resort($permissions);
+        return view('admin.permission.index',compact('permissions'));
     }
 
     /**
@@ -21,9 +26,12 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Permission $permission)
     {
-        return view('admin.permission.create');
+
+        $permissions = $permission->where('pid', '=', '0')->get();
+        $permissions = $this->resort($permissions);
+        return view('admin.permission.create',compact('permissions'));
     }
 
     /**
@@ -32,9 +40,29 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Permission $permission, M3Result $m3_result)
     {
-        //
+        // $res = $request->all();
+        $pername = $request->input('pername', '');
+        $pid = $request->input('pid', '');
+        $mname = $request->input('mname', '');
+        $cname = $request->input('cname', '');
+        $aname = $request->input('aname', '');
+
+        $permission->pername = $pername;
+        $permission->pid = $pid;
+        $permission->mname = $mname;
+        $permission->cname = $cname;
+        $permission->aname = $aname;
+
+        $permission->save();
+
+        // $m3_result = new M3Result;
+        $m3_result->status = 0;
+        $m3_result->message = '添加成功';
+
+        return $m3_result->toJson();
+
     }
 
     /**
@@ -80,5 +108,18 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function resort($data,$parentid=0,$level=0)
+    {
+      static $ret=array();
+      foreach ($data as $k => $v) {
+        if($v['pid']==$parentid){
+          $v['level']=$level;
+          $ret[]=$v;
+          $this->resort($data,$v['id'],$level+1);
+        }
+      }
+      return $ret;
     }
 }
