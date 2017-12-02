@@ -82,9 +82,10 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Permission $permission)
     {
-        //
+      $permissions = $permission->all();
+      return view('admin.permission.edit',compact('permissions','permission'));
     }
 
     /**
@@ -94,9 +95,28 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Permission $permission, M3Result $m3_result)
     {
-        //
+      $res = $request->all();
+      $pername = $request->input('pername', '');
+      $pid = $request->input('pid', '');
+      $mname = $request->input('mname', '');
+      $cname = $request->input('cname', '');
+      $aname = $request->input('aname', '');
+
+      $permission->pername = $pername;
+      $permission->pid = $pid;
+      $permission->mname = $mname;
+      $permission->cname = $cname;
+      $permission->aname = $aname;
+
+      $permission->update();
+
+      // $m3_result = new M3Result;
+      $m3_result->status = 0;
+      $m3_result->message = '添加成功';
+
+      return $m3_result->toJson();
     }
 
     /**
@@ -105,9 +125,14 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Permission $permission)
     {
-        //
+        $permission->delete();
+        $m3_result = new M3Result;
+        $m3_result->status = 0;
+        $m3_result->message = '删除成功';
+
+        return $m3_result->toJson();
     }
 
     private function resort($data,$parentid=0,$level=0)
