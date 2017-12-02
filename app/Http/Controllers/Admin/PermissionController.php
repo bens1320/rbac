@@ -29,7 +29,7 @@ class PermissionController extends Controller
     public function create(Permission $permission)
     {
 
-        $permissions = $permission->where('pid', '=', '0')->get();
+        $permissions = $permission->get();
         $permissions = $this->resort($permissions);
         return view('admin.permission.create',compact('permissions'));
     }
@@ -125,7 +125,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Permission $permission)
+    public function destroy(Permission $permission)
     {
         $permission->delete();
         $m3_result = new M3Result;

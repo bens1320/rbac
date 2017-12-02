@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Handlers\M3Result;
+use App\Models\Permission;
+use App\Models\Role;
 
 class RoleController extends Controller
 {
@@ -12,9 +15,10 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Role $role)
     {
-        return view('admin.role.index');
+        $roles = $role->get();
+        return view('admin.role.index', compact('roles'));
     }
 
     /**
@@ -22,9 +26,10 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Permission $permission)
     {
-        return view('admin.role.create');
+        $permissions = $permission->get();
+        return view('admin.role.create', compact('permissions'));
     }
 
     /**
@@ -33,9 +38,18 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Role $role, M3Result $m3_result)
     {
-        //
+      $rolename = $request->input('rolename', '');
+      $per_list = $request->input('per_list', '');
+
+      $role->rolename = $rolename;
+      $role->per_list = $per_list;
+      $role->save();
+      $m3_result->status = 0;
+      $m3_result->message = '添加成功';
+
+      return $m3_result->toJson();
     }
 
     /**
@@ -55,9 +69,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Permission $permission, Role $role)
     {
-        //
+        $permissions = $permission->get();
+        return view('admin.role.edit', compact('permissions', 'role'));
     }
 
     /**
@@ -67,9 +82,18 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role, M3Result $m3_result)
     {
-        //
+      $rolename = $request->input('rolename', '');
+      $per_list = $request->input('per_list', '');
+
+      $role->rolename = $rolename;
+      $role->per_list = $per_list;
+      $role->update();
+      $m3_result->status = 0;
+      $m3_result->message = '添加成功';
+
+      return $m3_result->toJson();
     }
 
     /**
@@ -78,8 +102,13 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+      $role->delete();
+      $m3_result = new M3Result;
+      $m3_result->status = 0;
+      $m3_result->message = '删除成功';
+
+      return $m3_result->toJson();
     }
 }

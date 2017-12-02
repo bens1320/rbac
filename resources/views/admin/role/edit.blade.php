@@ -5,12 +5,12 @@
 
 @section('content')
 <article class="cl pd-20">
-	<form action="" method="post" class="form form-horizontal" id="form-role-create">
+	<form action="" method="post" class="form form-horizontal" id="form-role-edit">
 	  {{ csrf_field() }}
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-					 <input type="text" class="input-text" value="" placeholder="" name="rolename" >
+					 <input type="text" class="input-text" value="{{$role['rolename']}}" placeholder="" name="rolename" >
 			</div>
 			<div class="col-4"> </div>
 		</div>
@@ -46,7 +46,7 @@ $(function(){
 		increaseArea: '20%'
 	});
 
-	$("#form-role-create").validate({
+	$("#form-role-edit").validate({
 		rules:{
 			rolename:{
 				required:true,
@@ -58,9 +58,9 @@ $(function(){
 		focusCleanup:true,
 		success:"valid",
 		submitHandler:function(form){
-		  $('#form-role-create').ajaxSubmit({
-          type: 'post', // 提交方式 get/post
-          url: '/admin/role', // 需要提交的 url
+		  $('#form-role-edit').ajaxSubmit({
+          type: 'put', // 提交方式 get/post
+          url: "/admin/role/{{$role['id']}}", // 需要提交的 url
           dataType: 'json',
           data: {
             id: "",
