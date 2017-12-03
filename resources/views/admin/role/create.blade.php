@@ -17,9 +17,17 @@
 	  <div class="row cl">
 	    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>名称：</label>
 	    <div class="formControls col-xs-8 col-sm-9">
-				@foreach($permissions as $permis)
-					{{$permis['id']}}{{$permis['pername']}}
-				@endforeach
+				<table  style="border-collapse:separate; border-spacing:0px 10px;">
+						@foreach($permissions as $permis)
+							<tr>
+							<td><input type="checkbox" name="per_list[]" value="{{ $permis['id']}}">{{$permis['pername']}}{{$permis->pid == 0 ? '：' : ''}}</td></tr>
+						@endforeach
+				</table>
+
+
+
+
+
 	    </div>
 	    <div class="col-4"> </div>
 	  </div>
@@ -60,7 +68,7 @@ $(function(){
 		submitHandler:function(form){
 		  $('#form-role-create').ajaxSubmit({
           type: 'post', // 提交方式 get/post
-          url: '/admin/role', // 需要提交的 url
+          url: '/admin/role/create', // 需要提交的 url
           dataType: 'json',
           data: {
             id: "",

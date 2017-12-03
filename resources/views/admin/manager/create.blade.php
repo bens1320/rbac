@@ -29,14 +29,14 @@
 	  <div class="row cl">
 	    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
 	    <div class="formControls col-xs-8 col-sm-9">
-	      <input type="text" class="input-text" value="" placeholder="" id="password" name="password"  >
+	      <input type="password" class="input-text" value="" placeholder="" id="password" name="password"  >
 	    </div>
 	    <div class="col-4"> </div>
 	  </div>
 		<div class="row cl">
 	    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
 	    <div class="formControls col-xs-8 col-sm-9">
-	      <input type="text" class="input-text" value="" placeholder="" id="repassword" name="repassword"  >
+	      <input type="password" class="input-text" value="" placeholder="" id="repassword" name="repassword"  >
 	    </div>
 	    <div class="col-4"> </div>
 	  </div>
@@ -88,7 +88,7 @@ $(function(){
 		submitHandler:function(form){
 		  $('#form-manager-create').ajaxSubmit({
           type: 'post', // 提交方式 get/post
-          url: '/admin/manager', // 需要提交的 url
+          url: '/admin/manager/create', // 需要提交的 url
           dataType: 'json',
           data: {
             username: $('input[name=username]').val(),

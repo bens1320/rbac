@@ -82,10 +82,11 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Permission $permission)
+    public function edit($id, Request $request, Permission $permission)
     {
-      $permissions = $permission->all();
-      return view('admin.permission.edit',compact('permissions','permission'));
+      $permissions = $permission->whereNotIn('id',[$id])->get();
+      $permission_id = $permission->find($id);
+      return view('admin.permission.edit',compact('permissions','permission_id'));
     }
 
     /**
@@ -98,21 +99,22 @@ class PermissionController extends Controller
     public function update(Request $request, Permission $permission, M3Result $m3_result)
     {
       $res = $request->all();
+      $id = $request->input('id', '');
       $pername = $request->input('pername', '');
       $pid = $request->input('pid', '');
       $mname = $request->input('mname', '');
       $cname = $request->input('cname', '');
       $aname = $request->input('aname', '');
 
-      $permission->pername = $pername;
-      $permission->pid = $pid;
-      $permission->mname = $mname;
-      $permission->cname = $cname;
-      $permission->aname = $aname;
+      $permission_id  = $permission->find($id);
+      $permission_id->pername = $pername;
+      $permission_id->pid = $pid;
+      $permission_id->mname = $mname;
+      $permission_id->cname = $cname;
+      $permission_id->aname = $aname;
 
-      $permission->update();
+      $permission_id->save();
 
-      // $m3_result = new M3Result;
       $m3_result->status = 0;
       $m3_result->message = '添加成功';
 

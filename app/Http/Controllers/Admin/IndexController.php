@@ -7,8 +7,9 @@ use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+      // print_r($request->session()->all());
       return view('admin.index.index');
     }
 }

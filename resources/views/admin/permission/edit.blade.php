@@ -11,9 +11,14 @@
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>上级分类：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<select class="select" name="pid" size="1">
-						<option value="0">顶级分类</option>
+					<option value="0">顶级权限</option>
 						@foreach ($permissions as $permis)
-						<option value="{{$permis['id']}}" {{ $permission->pid == $permis->id ? 'selected' : '' }}>{{$permis['pername']}}</option>
+							@if($permission_id->pid == $permis->id)
+		          	{{$selected="selected='selected'"}}
+		          @else
+								{{$selected=""}}
+		          @endif
+						<option  value="{{$permis['id']}}"  {{$selected}}>{{$permis['pername']}}</option>
 						@endforeach
 				</select>
 			</div>
@@ -21,25 +26,25 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="{{$permission['pername']}}" placeholder="" id="pername" name="pername">
+				<input type="text" class="input-text" value="{{$permission_id['pername']}}" placeholder="" id="pername" name="pername">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>模块名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="{{$permission['mname']}}" placeholder="" id="name" name="mname">
+				<input type="text" class="input-text" value="{{$permission_id['mname']}}" placeholder="" id="name" name="mname">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>控制器名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="{{$permission['cname']}}" placeholder="" id="name" name="cname">
+				<input type="text" class="input-text" value="{{$permission_id['cname']}}" placeholder="" id="name" name="cname">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>操作方法名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="{{$permission['aname']}}" placeholder="" id="name" name="aname">
+				<input type="text" class="input-text" value="{{$permission_id['aname']}}" placeholder="" id="name" name="aname">
 			</div>
 		</div>
 
@@ -80,10 +85,11 @@ $(function(){
 		success:"valid",
 		submitHandler:function(form){
 			 $('#form-permission-update').ajaxSubmit({
-            type: 'put', // 提交方式 get/post/put/delete
-            url: "/admin/permission/{{$permission['id']}}", // 需要提交的 url
+            type: 'post', // 提交方式 get/post
+            url: "/admin/permission/edit", // 需要提交的 url
             dataType: 'json',
             data: {
+						  id:{{$permission_id['id']}},
 							pid: $('select[name=pid] option:selected').val(),
               pername: $('input[name=pername]').val(),
               mname: $('input[name=mname]').val(),

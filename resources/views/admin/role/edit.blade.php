@@ -10,16 +10,25 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-					 <input type="text" class="input-text" value="{{$role['rolename']}}" placeholder="" name="rolename" >
+					 <input type="text" class="input-text" value="{{$role_id['rolename']}}" placeholder="" name="rolename" >
 			</div>
 			<div class="col-4"> </div>
 		</div>
 	  <div class="row cl">
-	    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>名称：</label>
+	    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限名称：</label>
 	    <div class="formControls col-xs-8 col-sm-9">
-				@foreach($permissions as $permis)
-					{{$permis['id']}}{{$permis['pername']}}
-				@endforeach
+							@foreach($permissions as $permis)
+							<ul>
+								<li id="" style="margin-top:10px;">
+									<input
+									@if (strpos("$role_id->per_list", "$permis->id") !== false)
+										{{$check="checked='checked'"}}
+									@else
+										{{$check=""}}
+									@endif  type="checkbox" name="per_list[]" value="{{ $permis['id']}}">{{$permis['pername']}}{{$permis->pid == 0 ? '：' : ''}}
+								</li>
+							</ul>
+							@endforeach
 	    </div>
 	    <div class="col-4"> </div>
 	  </div>
@@ -59,8 +68,8 @@ $(function(){
 		success:"valid",
 		submitHandler:function(form){
 		  $('#form-role-edit').ajaxSubmit({
-          type: 'put', // 提交方式 get/post
-          url: "/admin/role/{{$role['id']}}", // 需要提交的 url
+          type: 'post', // 提交方式 get/post
+          url: "/admin/role/edit/{{$role_id['id']}}", // 需要提交的 url
           dataType: 'json',
           data: {
             id: "",

@@ -49,7 +49,7 @@ class ManagerController extends Controller
       // 可以先做后台数据验证
 
       $manager->username = $username;
-      $manager->password = $password;
+      $manager->password = md5($password);
       $manager->roleid = $roleid;
       $manager->save();
 

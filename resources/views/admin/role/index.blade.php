@@ -30,7 +30,7 @@
 						<tr class="text-c">
 							<th width="80">ID</th>
 							<th width="100">角色名称</th>
-							<th width="40">权限列表</th>
+							<th width="100">权限列表</th>
 							<th width="100">操作</th>
 						</tr>
 					</thead>
@@ -41,7 +41,7 @@
 								<td>{{$role['rolename']}}</td>
 								<td>{{$role['per_list']}}</td>
 								<td class="td-manage">
-									<a title="编辑" href="javascript:;" onclick="role_edit('修改角色', '/admin/role/{{$role['id']}}/edit', '1000', '510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+									<a title="编辑" href="javascript:;" onclick="role_edit('修改角色', '/admin/role/edit/{{$role['id']}}', '1000', '510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 									<a title="删除" href="javascript:;" onclick="role_del('{{$role['rolename']}}','{{$role['id']}}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 								</td>
 							</tr>
@@ -67,7 +67,7 @@ function role_del(name, id) {
 	layer.confirm('确认要删除【' + name +'】吗？',function(index){
 		$.ajax({
     type: 'delete', // 提交方式 get/post
-    url: '/admin/role/'+id, // 需要提交的 url
+    url: '/admin/role/create', // 需要提交的 url
     dataType: 'json',
     data: {
       _token: "{{csrf_token()}}"

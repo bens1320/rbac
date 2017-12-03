@@ -40,7 +40,7 @@
 						<td>{{$permis['cname']}}</td>
 						<td>{{$permis['aname']}}</td>
 						<td class="td-manage">
-								<a title="编辑" href="javascript:;" onclick="permission_edit('修改权限', '/admin/permission/{{$permis['id']}}/edit', '1000', '510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+								<a title="编辑" href="javascript:;" onclick="permission_edit('修改权限', '/admin/permission/edit/{{$permis['id']}}', '1000', '510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 								<a title="删除" href="javascript:;" onclick='permission_del("{{$permis['pername']}}", "{{$permis['id']}}")' class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 						</td>
 					</tr>

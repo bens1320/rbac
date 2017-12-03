@@ -81,7 +81,7 @@ $(function(){
 		submitHandler:function(form){
 			 $('#form-permission-create').ajaxSubmit({
             type: 'post', // 提交方式 get/post
-            url: '/admin/permission', // 需要提交的 url
+            url: '/admin/permission/create', // 需要提交的 url
             dataType: 'json',
             data: {
 							pid: $('select[name=pid] option:selected').val(),

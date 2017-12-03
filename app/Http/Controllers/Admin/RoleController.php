@@ -29,6 +29,7 @@ class RoleController extends Controller
     public function create(Permission $permission)
     {
         $permissions = $permission->get();
+        $permissions = $this->resort($permissions);
         return view('admin.role.create', compact('permissions'));
     }
 
@@ -42,7 +43,7 @@ class RoleController extends Controller
     {
       $rolename = $request->input('rolename', '');
       $per_list = $request->input('per_list', '');
-
+      $per_list = implode(',', $per_list);
       $role->rolename = $rolename;
       $role->per_list = $per_list;
       $role->save();
@@ -69,10 +70,12 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Permission $permission, Role $role)
+    public function edit($id, Permission $permission, Role $role)
     {
         $permissions = $permission->get();
-        return view('admin.role.edit', compact('permissions', 'role'));
+        $permissions = $this->resort($permissions);
+        $role_id = $role->find($id);
+        return view('admin.role.edit', compact('permissions', 'role_id'));
     }
 
     /**
@@ -82,14 +85,15 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role, M3Result $m3_result)
+    public function update($id, Request $request, Role $role, M3Result $m3_result)
     {
+      $role_id = $role->find($id);
       $rolename = $request->input('rolename', '');
       $per_list = $request->input('per_list', '');
 
-      $role->rolename = $rolename;
-      $role->per_list = $per_list;
-      $role->update();
+      $role_id->rolename = $rolename;
+      $role_id->per_list = $per_list;
+      $role_id->save();
       $m3_result->status = 0;
       $m3_result->message = '添加成功';
 
@@ -110,5 +114,18 @@ class RoleController extends Controller
       $m3_result->message = '删除成功';
 
       return $m3_result->toJson();
+    }
+
+    private function resort($data,$parentid=0,$level=0)
+    {
+      static $ret=array();
+      foreach ($data as $k => $v) {
+        if($v['pid']==$parentid){
+          $v['level']=$level;
+          $ret[]=$v;
+          $this->resort($data,$v['id'],$level+1);
+        }
+      }
+      return $ret;
     }
 }
