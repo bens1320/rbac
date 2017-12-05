@@ -41,8 +41,10 @@
 								<td>{{$role['rolename']}}</td>
 								<td>{{$role['per_list']}}</td>
 								<td class="td-manage">
+									@if ($role['id'] != 1)
 									<a title="编辑" href="javascript:;" onclick="role_edit('修改角色', '/admin/role/edit/{{$role['id']}}', '1000', '510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 									<a title="删除" href="javascript:;" onclick="role_del('{{$role['rolename']}}','{{$role['id']}}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+									@endif
 								</td>
 							</tr>
 							@endforeach
@@ -66,8 +68,8 @@ function role_edit(title,url,w,h){
 function role_del(name, id) {
 	layer.confirm('确认要删除【' + name +'】吗？',function(index){
 		$.ajax({
-    type: 'delete', // 提交方式 get/post
-    url: '/admin/role/create', // 需要提交的 url
+    type: 'get', // 提交方式 get/post
+    url: '/admin/role/delete/'+id, // 需要提交的 url
     dataType: 'json',
     data: {
       _token: "{{csrf_token()}}"

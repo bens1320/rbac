@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Handlers\M3Result;
 
-class CheckLogin
+class CheckPermission
 {
     /**
      * Handle an incoming request.
@@ -16,12 +17,13 @@ class CheckLogin
      */
     public function handle(Request $request, Closure $next)
     {
-      @$http_referer = $_SERVER['HTTP_REFERER'];
-      $admin = $request->session()->get('admin');
-      if( $admin == '' || $admin['expire'] < time()){
-          $request->session()->forget('admin');
-          return redirect('/admin/login?return_url=' . urlencode($http_referer));
+      $URI = $request->getRequestUri();
+      if(substr_count($URI, '/') == 4){
+          $URI = substr($URI, 0, strrpos($URI, '/'));
       }
+      if(session('privileage')!='*' && !in_array($URI, $request->session()->get('privileage'))){
+			     return redirect('/admin/permission/noPermission');
+		  }
 
       return $next($request);
     }

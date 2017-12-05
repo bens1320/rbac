@@ -26,7 +26,7 @@
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<title>bens后台管理</title>
+<title>RBAC后台管理</title>
 <meta name="keywords" content="H-ui.admin v3.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
 <meta name="description" content="H-ui.admin v3.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
@@ -35,7 +35,7 @@
 <!--_header 作为公共模版分离出去-->
 <header class="navbar-wrapper">
 	<div class="navbar navbar-fixed-top">
-		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">bennnnnn</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a>
+		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">RBAC</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a>
 			<span class="logo navbar-slogan f-l mr-10 hidden-xs">后台</span>
 			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
@@ -59,33 +59,23 @@
 <aside class="Hui-aside">
 
 		<div class="menu_dropdown bk_2">
-					<hr>
-					<dl id="menu-product">
-							<dt><i class="Hui-iconfont">&#xe681;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-							<dd>
+				<dl>
+						<dt><i class="Hui-iconfont">&#xe681;</i>常用操作<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+							<ul>
+								<li><a href="/admin/product/index" title="管理员列表">商品管理</a></li>
+								<li><a href="/admin/order/index" title="角色列表">订单管理</a></li>
+							</ul>
+			</dl>
+				<hr>
+					<dl>
+							<dt><i class="Hui-iconfont">&#xe681;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 								<ul>
 									<li><a href="/admin/manager/index" title="管理员列表">管理员列表</a></li>
-						</ul>
-					</dd>
+									<li><a href="/admin/role/index" title="角色列表">角色列表</a></li>
+									<li><a href="/admin/permission/index" title="权限列表">权限列表</a></li>
+								</ul>
 				</dl>
 
-					<dl id="menu-comments">
-						<dt><i class="Hui-iconfont">&#xe620;</i> 角色管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-						<dd>
-							<ul>
-								<li><a href="/admin/role/index" title="角色列表">角色列表</a></li>
-					</ul>
-				</dd>
-			</dl>
-
-				<dl id="menu-member">
-					<dt><i class="Hui-iconfont">&#xe60d;</i> 权限管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-					<dd>
-						<ul>
-							<li><a href="/admin/permission/index" title="权限列表">权限列表</a></li>
-				</ul>
-			</dd>
-		</dl>
 </div>
 </aside>
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>

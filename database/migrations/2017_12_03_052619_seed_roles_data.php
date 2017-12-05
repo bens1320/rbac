@@ -18,6 +18,14 @@ class SeedRolesData extends Migration
               'rolename'  => '超级管理员',
               'per_list' => '*',
           ],
+          [
+              'rolename'  => '权限管理员',
+              'per_list' => '*',
+          ],
+          [
+              'rolename'  => '角色管理员',
+              'per_list' => '*',
+          ],
       ];
 
       DB::table('roles')->insert($roles);

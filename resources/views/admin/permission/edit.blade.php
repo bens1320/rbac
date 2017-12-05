@@ -32,19 +32,19 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>模块名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="{{$permission_id['mname']}}" placeholder="" id="name" name="mname">
+				<input type="text" class="input-text" value="{{$permission_id['mname']}}" placeholder="" id="mname" name="mname">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>控制器名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="{{$permission_id['cname']}}" placeholder="" id="name" name="cname">
+				<input type="text" class="input-text" value="{{$permission_id['cname']}}" placeholder="" id="cname" name="cname">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>操作方法名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="{{$permission_id['aname']}}" placeholder="" id="name" name="aname">
+				<input type="text" class="input-text" value="{{$permission_id['aname']}}" placeholder="" id="aname" name="aname">
 			</div>
 		</div>
 

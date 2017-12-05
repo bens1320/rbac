@@ -61,9 +61,9 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-      $request->session()->forget('admin');
+      $request->session()->flush();
       $return_url = $request->input('return_url', '');
-      return view('admin.login.login')->with('return_url', urldecode($return_url));
+      return redirect('admin/login')->with('return_url', urldecode($return_url));
     }
 
     public function validateCode(Request $request, ValidateCode $validateCode)
@@ -80,19 +80,35 @@ class LoginController extends Controller
 
         if($role_id->per_list == '*'){
           $request->session()->put('privileage', "*");
-    	 		$menu = $permission->where('pid','=','0')->get();
+          $permissions = $permission->get();
+          $menu=array();
+          $menu2=array();
+          foreach($permissions as  $v){
+    	 			if($v['pid']==0){
+              $data = array('id'=>$v->id,'pername'=>$v->pername);
+    	 				$menu[] = $data;
+    	 			}
+          }
 
     	 		foreach ($menu as $k => $v) {
-    	 			$menu[$k]['sub']=$permission->where("pid", "=", "{$v['id']}")->get();
+    	 			foreach ($permissions as $k2 => $v2) {
+    	 				if($v2->pid==$v['id']){
+                $data2 = array('id'=>$v2->id, 'pid'=>$v2->pid, 'pername'=>$v2->pername,'cname'=>$v2->cname, 'aname'=>$v2->aname);
+    	 					$menu2[] = $data2;
+    	 				}
+    	 			}
     	 		}
           $request->session()->put('menu', $menu);
+          $request->session()->put('menu2', $menu2);
+
         }else{
           $ids = explode(',', $role_id->per_list);
           $permissions = $permission->whereIn('id', $ids)->get();
           $_permissions=array();
           $menu=array();
+          $menu2=array();
           foreach($permissions as  $v){
-            $url = $v->mname.'/'.$v->cname.'/'.$v->aname;
+            $url = '/'.$v->mname.'/'.$v->cname.'/'.$v->aname;
     	 			$_permissions[]=$url;
     	 			if($v['pid']==0){
               $data = array('id'=>$v->id,'pername'=>$v->pername);
@@ -104,11 +120,12 @@ class LoginController extends Controller
     	 		foreach ($menu as $k => $v) {
     	 			foreach ($permissions as $k2 => $v2) {
     	 				if($v2->pid==$v['id']){
-                $data2 = array('id'=>$v2->id, 'pername'=>$v2->pername,'cname'=>$v2->cname, 'aname'=>$v2->aname);
-    	 					$menu[$k]['sub'][] = $data2;
+                $data2 = array('id'=>$v2->id, 'pid'=>$v2->pid, 'pername'=>$v2->pername,'cname'=>$v2->cname, 'aname'=>$v2->aname);
+    	 					$menu2[] = $data2;
     	 				}
     	 			}
     	 		}
+          $request->session()->put('menu2', $menu2);
           $request->session()->put('menu', $menu);
     	 }
 

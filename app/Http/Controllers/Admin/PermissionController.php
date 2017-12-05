@@ -14,10 +14,12 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Permission $permission)
+    public function index(Request $request, Permission $permission)
     {
+
         $permissions = $permission->get();
         $permissions = $this->resort($permissions);
+        // print_r($permissions);die;
         return view('admin.permission.index',compact('permissions'));
     }
 
@@ -42,7 +44,7 @@ class PermissionController extends Controller
      */
     public function store(Request $request, Permission $permission, M3Result $m3_result)
     {
-        // $res = $request->all();
+
         $pername = $request->input('pername', '');
         $pid = $request->input('pid', '');
         $mname = $request->input('mname', '');
@@ -59,7 +61,7 @@ class PermissionController extends Controller
 
         // $m3_result = new M3Result;
         $m3_result->status = 0;
-        $m3_result->message = '添加成功';
+        $m3_result->message = '修改成功';
 
         return $m3_result->toJson();
 
@@ -98,7 +100,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission, M3Result $m3_result)
     {
-      $res = $request->all();
+      // $res = $request->all();
       $id = $request->input('id', '');
       $pername = $request->input('pername', '');
       $pid = $request->input('pid', '');
@@ -127,9 +129,9 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permission $permission)
+    public function destroy($id, Permission $permission)
     {
-        $permission->delete();
+        $permission->where('id', '=', $id)->delete();
         $m3_result = new M3Result;
         $m3_result->status = 0;
         $m3_result->message = '删除成功';
@@ -137,8 +139,14 @@ class PermissionController extends Controller
         return $m3_result->toJson();
     }
 
+    public function noPermission()
+    {
+      return view('admin.permission.noPermission');
+    }
+
     private function resort($data,$parentid=0,$level=0)
     {
+
       static $ret=array();
       foreach ($data as $k => $v) {
         if($v['pid']==$parentid){

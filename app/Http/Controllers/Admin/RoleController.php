@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Handlers\M3Result;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\Manager;
 
 class RoleController extends Controller
 {
@@ -18,6 +19,8 @@ class RoleController extends Controller
     public function index(Role $role)
     {
         $roles = $role->get();
+        // $manager = Role::with('manager')->get();
+        // print_r($manager);die;
         return view('admin.role.index', compact('roles'));
     }
 
@@ -85,17 +88,19 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request, Role $role, M3Result $m3_result)
+    public function update(Request $request, Role $role, M3Result $m3_result)
     {
+      $id = $request->input('id', '');
       $role_id = $role->find($id);
       $rolename = $request->input('rolename', '');
       $per_list = $request->input('per_list', '');
+      $per_list = implode(',', $per_list);
 
       $role_id->rolename = $rolename;
       $role_id->per_list = $per_list;
       $role_id->save();
       $m3_result->status = 0;
-      $m3_result->message = '添加成功';
+      $m3_result->message = '修改成功';
 
       return $m3_result->toJson();
     }
@@ -106,9 +111,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy($id, Role $role)
     {
-      $role->delete();
+
+      $role->where('id', '=', $id)->delete();
       $m3_result = new M3Result;
       $m3_result->status = 0;
       $m3_result->message = '删除成功';

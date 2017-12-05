@@ -69,10 +69,10 @@ $(function(){
 		submitHandler:function(form){
 		  $('#form-role-edit').ajaxSubmit({
           type: 'post', // 提交方式 get/post
-          url: "/admin/role/edit/{{$role_id['id']}}", // 需要提交的 url
+          url: "/admin/role/edit", // 需要提交的 url
           dataType: 'json',
           data: {
-            id: "",
+            id: {{$role_id['id']}},
             rolename: $('input[name=rolename]').val(),
             _token: "{{csrf_token()}}"
           },

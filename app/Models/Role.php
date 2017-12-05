@@ -9,4 +9,8 @@ class Role extends Model
   protected $fillable = [
       'id', 'rolename', 'per_list'
   ];
+  public function manager()
+    {
+        return $this->belongsTo('App\Models\Manager');
+    }
 }

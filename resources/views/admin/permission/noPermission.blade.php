@@ -24,7 +24,7 @@
 <script>DD_belatedPNG.fix('*');</script><![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<title> - 404页面H-ui.admin v3.0</title>
+<title>没有权限！</title>
 <meta name="keywords" content="H-ui.admin v3.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
 <meta name="description" content="H-ui.admin v3.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
@@ -35,9 +35,9 @@
 	<div class="Hui-article">
 		<article class="cl pd-20">
 			<section class="page-404 minWP text-c">
-			  <p class="error-title"><i class="Hui-iconfont va-m" style="font-size:80px">&#xe656;</i><span class="va-m"> 404</span></p>
-			  <p class="error-description">不好意思，您访问的页面不存在~</p>
-			  <p class="error-info">您可以：<a href="javascript:;" onclick="history.go(-1)" class="c-primary">&lt; 返回上一页</a><span class="ml-20">|</span><a href="/admin/index" class="c-primary ml-20">去首页 &gt;</a></p>
+			  <p class="error-title"><i class="Hui-iconfont va-m" style="font-size:80px">&#xe656;</i><span class="va-m"> 没有权限</span></p>
+			  <p class="error-description">不好意思，您没有权限访问页面~</p>
+			  <p class="error-info"><a href="javascript:;" onclick="history.go(-1)" class="c-primary"> 返回上一页</a></p>
 			</section>
 		</article>
 	</div>

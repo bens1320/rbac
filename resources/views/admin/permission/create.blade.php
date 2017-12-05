@@ -39,7 +39,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>操作方法名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="name" name="aname">
+				<input type="text" class="input-text" value="" placeholder="" id="aname" name="aname">
 			</div>
 		</div>
 
@@ -88,7 +88,7 @@ $(function(){
               pername: $('input[name=pername]').val(),
               mname: $('input[name=mname]').val(),
               cname: $('input[name=cname]').val(),
-              aname: $('input[name=aname]').val(),
+              aname: $('select[name=aname] option:selected').val(),
               _token: "{{csrf_token()}}"
             },
             success: function(data) {

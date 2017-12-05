@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Manager extends Model
 {
-  protected $fillable = [
-      'id', 'username', 'password', 'roleid'
-  ];
+  /**
+    * 获得与用户关联的电话记录。
+    */
+   public function role()
+   {
+       return $this->hasOne('App\Models\Role');
+   }
 }
